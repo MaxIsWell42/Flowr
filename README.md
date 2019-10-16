@@ -1,4 +1,4 @@
-~Flowr~ 
+Flowr: 
 A flowchart based social media idea, proposed to help people make decisions by breaking them down while also always preparing them for their next move.
 Created and coded by Max Finn.
 
