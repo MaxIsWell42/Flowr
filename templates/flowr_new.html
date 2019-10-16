@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class='row'>
+    <div class='col-sm-6 col-sm-offset-3'>
+        <form method='POST' action='/product'>
+            {% include 'partials/flowr_form.html' %}
+            <!-- Button -->
+            <div class='form-group'>
+                <button class ='btn btn-primary' type='submit'>Save your Flowr for later!</button>
+                <a href="/">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
