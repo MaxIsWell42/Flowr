@@ -13,7 +13,7 @@ body {
 }
 
 body {
-	background: #52be7f;
+	background: #00b33c;
 	color: #fff;
 }
 
@@ -52,8 +52,8 @@ body {
 	border: none;
 	border-radius: 50%;
 	background: none;
-	background-color: #fff;
-	color: #52be7f;
+	background-color: yellow;
+	color: green;
 	text-align: center;
 	font-weight: 700;
 	font-size: 1.5em;

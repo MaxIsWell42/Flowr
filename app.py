@@ -22,22 +22,19 @@ flowrs = db.flowr
 questions = db.questions
 answers = db.answer
 
+# Places API key
+API_KEY = os.environ.get('API_KEY')
+
 # Defining the client
-key = os.environ.get('API_KEY')
-gmaps = googlemaps.Client(key=key)
+gmaps = googlemaps.Client(key=API_KEY)
 
 # flask app name
 app = Flask(__name__)
 
-# Places API key
-API_KEY = os.environ.get('API_KEY')
-
 @app.route('/')
 @app.route('/index', methods=['GET'])
 def flowr_homepage():
-    
     if request.method == 'GET':
-    
         #print(details)
         return render_template('index.html')
 
@@ -45,106 +42,43 @@ def flowr_homepage():
 def thai():
     if request.method == 'GET':
         query = 'Thai resturant'
-        results = gmaps.places(query, radius=2, location=['37.773972', '-122.431297'], language='English', max_price=4)
-        photo_id = results['results'][0]['photos'][0]['photo_reference']
-        print(photo_id)
-        #gmaps.places_photo(photo_id)
-        f = open('resturant_photo.jpg', 'wb')
-        for chunk in gmaps.places_photo(photo_id, max_width=100):
-            if chunk:
-                f.write(chunk)
-        f.close()
-        return results
+        return query
 
 @app.route('/mexican', methods=['GET'])
 def mexican():
     if request.method == 'GET':
         query = 'Mexican resturant'
-        results = gmaps.places(query, radius=2, location=['37.773972', '-122.431297'], language='English', max_price=4)
-        photo_id = results['results'][0]['photos'][0]['photo_reference']
-        print(photo_id)
-        #gmaps.places_photo(photo_id)
-        f = open('resturant_photo.jpg', 'wb')
-        for chunk in gmaps.places_photo(photo_id, max_width=100):
-            if chunk:
-                f.write(chunk)
-        f.close()
-        return results
+        return query
 
 @app.route('/chinese', methods=['GET'])
 def chinese():
     if request.method == 'GET':
         query = 'Chinese resturant'
-        results = gmaps.places(query, radius=2, location=['37.773972', '-122.431297'], language='English', max_price=4)
-        photo_id = results['results'][0]['photos'][0]['photo_reference']
-        print(photo_id)
-        #gmaps.places_photo(photo_id)
-        f = open('resturant_photo.jpg', 'wb')
-        for chunk in gmaps.places_photo(photo_id, max_width=100):
-            if chunk:
-                f.write(chunk)
-        f.close()
-        return results
+        return query
 
 @app.route('/american', methods=['GET'])
 def american():
     if request.method == 'GET':
         query = 'American resturant'
-        results = gmaps.places(query, radius=2, location=['37.773972', '-122.431297'], language='English', max_price=4)
-        photo_id = results['results'][0]['photos'][0]['photo_reference']
-        print(photo_id)
-        #gmaps.places_photo(photo_id)
-        f = open('resturant_photo.jpg', 'wb')
-        for chunk in gmaps.places_photo(photo_id, max_width=100):
-            if chunk:
-                f.write(chunk)
-        f.close()
-        return results
+        return query
 
 @app.route('/indian', methods=['GET'])
 def indian():
     if request.method == 'GET':
         query = 'Indian resturant'
-        results = gmaps.places(query, radius=2, location=['37.773972', '-122.431297'], language='English', max_price=4)
-        photo_id = results['results'][0]['photos'][0]['photo_reference']
-        print(photo_id)
-        #gmaps.places_photo(photo_id)
-        f = open('resturant_photo.jpg', 'wb')
-        for chunk in gmaps.places_photo(photo_id, max_width=100):
-            if chunk:
-                f.write(chunk)
-        f.close()
-        return results
+        return query
 
 @app.route('/japanese', methods=['GET'])
 def japanese():
     if request.method == 'GET':
         query = 'Japanese resturant'
-        results = gmaps.places(query, radius=2, location=['37.773972', '-122.431297'], language='English', max_price=4)
-        photo_id = results['results'][0]['photos'][0]['photo_reference']
-        print(photo_id)
-        #gmaps.places_photo(photo_id)
-        f = open('resturant_photo.jpg', 'wb')
-        for chunk in gmaps.places_photo(photo_id, max_width=100):
-            if chunk:
-                f.write(chunk)
-        f.close()
-        return results
+        return query
 
 @app.route('/italian', methods=['GET'])
 def italian():
-    if request.method == 'GET':
-        query = 'Italian resturant'
-        results = gmaps.places(query, radius=2, location=['37.773972', '-122.431297'], language='English', max_price=4)
-        photo_id = results['results'][0]['photos'][0]['photo_reference']
-        print(photo_id)
-        #gmaps.places_photo(photo_id)
-        f = open('resturant_photo.jpg', 'wb')
-        for chunk in gmaps.places_photo(photo_id, max_width=100):
-            if chunk:
-                f.write(chunk)
-        f.close()
-        return results
+     if request.method == 'GET':
+        query = 'Thai resturant'
+        return query
 
 @app.route('/flowr/new')
 def flowr_new():
@@ -164,16 +98,26 @@ def flowr_show():
     return render_template('flowr_show.html', flowr_id=flowr_id)
 
 @app.route('/flowr/<flowr_choice>', methods=['GET'])
-def flowr_choice():
-    #TODO: implement differenct choices sending you to differnet pages
-    if flowr_choice == choice1:
-        return render_template('/flowr')
-    elif flowr_choice == choice2:
-        return render_template('/flowr')
+# def flowr_choice():
+#     #TODO: implement differenct choices sending you to differnet pages
+#     if flowr_choice == choice1:
+#         return render_template('/flowr')
+#     elif flowr_choice == choice2:
+#         return render_template('/flowr')
 
-@app.route('/flowr/<flowr_id>')
-def flowr_final():
-    return render_template('/flowr/<flowr_id>')
+@app.route('/flowr/results')
+def flowr_final(query):
+    results = gmaps.places(query, radius=2, location=['37.773972', '-122.431297'], language='English', max_price=4)
+    for i in range(2):
+        for x in range(2):
+            photo_id = results['results'][i]['photos'][x]['photo_reference']
+
+    f = open('resturant_photo.jpg', 'wb')
+    for chunk in gmaps.places_photo(photo_id, max_width=100):
+        if chunk:
+            f.write(chunk)
+    f.close()
+    return render_template('flowr_results.html')
 
 if __name__ == "__main__":
     app.run(debug=True, port=8080)
