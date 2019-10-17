@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block content %}
-{% endblock %}
+<!-- Homepage. Gives user the question they can start off on. Future plans are to make it a full interface. -->
+
 <a href='/'>Back to home</a>
 
 <div>
     <box>
-        <a href="/flowr/new">{{ flowr.question1 }}</a>
-
+        {% for question in questions %}
+            <a href="/flowr/new">{{ flowr.question }}</a>
     </box>
 </div>
