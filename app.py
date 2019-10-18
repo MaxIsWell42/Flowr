@@ -122,18 +122,28 @@ def flowr_final(query):
     #     print('a', a)
     #     print('b', b)
 
+    images_array = []
+    restaurant1 = []
+
     for photo_id, restaurant in photo_ids.items():
+
         print(photo_id)
         photos = restaurant['photos']
         meta_data = photos[0]
         reference = meta_data['photo_reference']
 
-        with open('/photos/resturant_photo_'+ str(photo_id) + '.jpg', 'wb') as f:
+        
+        images_array.append('./photos/resturant_photo_'+ str(photo_id) + '.jpg')
+        for i in range(1,3):
+            if photo_id == i:
+                restaurant1.append('./photos/restaurant_photo_' + str(photo_id) + '.jpg')
+       
+        with open('./static/photos/resturant_photo_'+ str(photo_id) + '.jpg', 'wb+') as f:
             for chunk in gmaps.places_photo(reference, max_width=100):
                 if chunk:
                     f.write(chunk)
         f.close()
-    return render_template('flowr_results.html')
+    return render_template('flowr_results.html', results='results', restaurant1=restaurant1)
 
 if __name__ == "__main__":
     app.run(debug=True, port=8080)

@@ -2,6 +2,11 @@
 <a href='/'>Back to home</a>
 <div class='row'>
     <div class='col-sm-6 col-sm-offset-3'>
-        <h1></h1>
+        <h1>
+            <!-- Restaurant 1: {{ restaurant_name }} -->
+            {% for image in restaurant1 %}
+                <img src="{{ image }}" width="100" height="auto" />
+            {% endfor %}
+        </h1>
     </div>
 </div>
