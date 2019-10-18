@@ -60,6 +60,7 @@ body {
 	text-transform: uppercase;
 	cursor: pointer;
 	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
 }
 
 .csstransforms .cn-wrapper {
@@ -146,10 +147,10 @@ body {
 	width: 14.5em;
 	height: 14.5em;
 	border-radius: 50%;
-	background: #429a67;
-	background: -webkit-radial-gradient(transparent 35%, #429a67 35%);
-	background: -moz-radial-gradient(transparent 35%, #429a67 35%);
-	background: radial-gradient(transparent 35%, #429a67 35%);
+	background: #ff80df;
+	background: -webkit-radial-gradient(transparent 35%,#ff80df 35%);
+	background: -moz-radial-gradient(transparent 35%, #ff80df 35%);
+	background: radial-gradient(transparent 35%, #ff80df 35%);
 	color: #fff;
 	text-align: center;
 	text-decoration: none;

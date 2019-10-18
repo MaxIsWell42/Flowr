@@ -6,6 +6,7 @@ import time
 import os
 import googlemaps
 import requests
+from pprint import pprint
 
 #TODO Finish questions+answers, use answers to query the final page, finish wireframes.
 
@@ -42,43 +43,43 @@ def flowr_homepage():
 def thai():
     if request.method == 'GET':
         query = 'Thai resturant'
-        return query
+        return redirect(url_for('flowr_final', query=query))
 
 @app.route('/mexican', methods=['GET'])
 def mexican():
     if request.method == 'GET':
         query = 'Mexican resturant'
-        return query
+        return redirect(url_for('flowr_final', query=query))
 
 @app.route('/chinese', methods=['GET'])
 def chinese():
     if request.method == 'GET':
         query = 'Chinese resturant'
-        return query
+        return redirect(url_for('flowr_final', query=query))
 
 @app.route('/american', methods=['GET'])
 def american():
     if request.method == 'GET':
         query = 'American resturant'
-        return query
+        return redirect(url_for('flowr_final', query=query))
 
 @app.route('/indian', methods=['GET'])
 def indian():
     if request.method == 'GET':
         query = 'Indian resturant'
-        return query
+        return redirect(url_for('flowr_final', query=query))
 
 @app.route('/japanese', methods=['GET'])
 def japanese():
     if request.method == 'GET':
         query = 'Japanese resturant'
-        return query
+    return redirect(url_for('flowr_final', query=query))
 
 @app.route('/italian', methods=['GET'])
 def italian():
      if request.method == 'GET':
-        query = 'Thai resturant'
-        return query
+        query = 'Italian resturant'
+        return redirect(url_for('flowr_final', query=query))
 
 @app.route('/flowr/new')
 def flowr_new():
@@ -105,18 +106,33 @@ def flowr_show():
 #     elif flowr_choice == choice2:
 #         return render_template('/flowr')
 
-@app.route('/flowr/results')
+@app.route('/flowr/results/<query>')
 def flowr_final(query):
     results = gmaps.places(query, radius=2, location=['37.773972', '-122.431297'], language='English', max_price=4)
-    for i in range(2):
-        for x in range(2):
-            photo_id = results['results'][i]['photos'][x]['photo_reference']
 
-    f = open('resturant_photo.jpg', 'wb')
-    for chunk in gmaps.places_photo(photo_id, max_width=100):
-        if chunk:
-            f.write(chunk)
-    f.close()
+    photo_ids = {}
+    _id = 0
+    for restaurant in results['results']:
+        # print(_id, restaurant)
+        photo_ids[_id] = restaurant
+        _id += 1
+
+    # photo_ids.append(results['results'][i]['photos'][x]['photo_reference'])
+    # for a, b in results['results'].items():
+    #     print('a', a)
+    #     print('b', b)
+
+    for photo_id, restaurant in photo_ids.items():
+        print(photo_id)
+        photos = restaurant['photos']
+        meta_data = photos[0]
+        reference = meta_data['photo_reference']
+
+        with open('/photos/resturant_photo_'+ str(photo_id) + '.jpg', 'wb') as f:
+            for chunk in gmaps.places_photo(reference, max_width=100):
+                if chunk:
+                    f.write(chunk)
+        f.close()
     return render_template('flowr_results.html')
 
 if __name__ == "__main__":
